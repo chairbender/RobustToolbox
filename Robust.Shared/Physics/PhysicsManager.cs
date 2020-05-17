@@ -47,6 +47,28 @@ namespace Robust.Shared.Physics
             return false;
         }
 
+        /// <inheritdoc />
+        public bool TryGetCollision(Box2 collider, MapId map, int collisionMask, out IEntity collidedWith, IEntity ignoredEnt = null)
+        {
+            foreach (var body in this[map].Query(collider))
+            {
+                if (!body.CollisionEnabled || body.CollisionLayer == 0x0 || (ignoredEnt != null && body.Owner == ignoredEnt))
+                    continue;
+
+                if (body.MapID == map &&
+                    body.IsHardCollidable &&
+                    (body.CollisionLayer & collisionMask) != 0x0 &&
+                    body.WorldAABB.Intersects(collider))
+                {
+                    collidedWith = body.Owner;
+                    return true;
+                }
+            }
+
+            collidedWith = null;
+            return false;
+        }
+
         /// <summary>
         ///     returns true if collider intersects a physBody under management and calls Bump.
         /// </summary>

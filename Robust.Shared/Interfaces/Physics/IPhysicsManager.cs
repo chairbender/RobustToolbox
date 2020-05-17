@@ -22,6 +22,18 @@ namespace Robust.Shared.Interfaces.Physics
         /// <returns>true if collides, false if not</returns>
         bool IsColliding(Box2 collider, MapId map);
 
+        /// <summary>
+        /// Checks to see if the specified collision rectangle collides with any of the physBodies under management.
+        /// Also fires the OnCollide event of the first managed physBody to intersect with the collider.
+        /// </summary>
+        /// <param name="collider">Collision rectangle to check</param>
+        /// <param name="map">Map to check on</param>
+        /// <param name="collisionMask">mask of the layers to check collisions with</param>
+        /// <param name="collidedWith">first entity collided with, if a collision occurs</param>
+        /// <param name="ignoredEnt">entity to ignore when checking for collisions</param>
+        /// <returns>true iff a collision occurs</returns>
+        bool TryGetCollision(Box2 collider, MapId map, int collisionMask, out IEntity collidedWith, IEntity ignoredEnt = null);
+
         bool TryCollide(IEntity entity, Vector2 offset, bool bump = true);
 
         void AddBody(IPhysBody physBody);
