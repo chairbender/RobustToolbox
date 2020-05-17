@@ -448,6 +448,16 @@ namespace Robust.Shared.Map
             return new MapIndices(x, y);
         }
 
+        /// <inheritdoc />
+        public GridCoordinates SnapGridCenter(GridCoordinates gridPos)
+        {
+            var snapped = new Vector2( //Round local coordinates onto the snap grid
+                (float)(Math.Round((gridPos.Position.X / (double)SnapSize - 0.5f), MidpointRounding.AwayFromZero) + 0.5) * SnapSize,
+                (float)(Math.Round((gridPos.Position.Y / (double)SnapSize - 0.5f), MidpointRounding.AwayFromZero) + 0.5) * SnapSize);
+
+            return new GridCoordinates(snapped, Index);
+        }
+
         public bool CollidesWithGrid(MapIndices indices)
         {
             var chunkIndices = GridTileToChunkIndices(indices);

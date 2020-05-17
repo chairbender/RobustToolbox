@@ -208,6 +208,12 @@ namespace Robust.Shared.Map
         /// </summary>
         MapIndices LocalToChunkIndices(GridCoordinates gridPos);
 
+        /// <summary>
+        /// Snaps the provided grid coordinates to the center of
+        /// the nearest snap grid cell.
+        /// </summary>
+        GridCoordinates SnapGridCenter(GridCoordinates gridPos);
+
         #endregion Transforms
 
         #region Collision

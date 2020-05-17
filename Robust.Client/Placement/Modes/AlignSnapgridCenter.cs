@@ -46,16 +46,16 @@ namespace Robust.Client.Placement.Modes
         {
             MouseCoords = ScreenToCursorGrid(mouseScreen);
 
-            snapSize = pManager.MapManager.GetGrid(MouseCoords.GridID).SnapSize; //Find snap size.
+            var grid = pManager.MapManager.GetGrid(MouseCoords.GridID);
+
+            snapSize = grid.SnapSize; //Find snap size.
             GridDistancing = snapSize;
             onGrid = true;
 
-            var mouseLocal = new Vector2( //Round local coordinates onto the snap grid
-                (float)(Math.Round((MouseCoords.Position.X / (double)snapSize - 0.5f), MidpointRounding.AwayFromZero) + 0.5) * snapSize,
-                (float)(Math.Round((MouseCoords.Position.Y / (double)snapSize - 0.5f), MidpointRounding.AwayFromZero) + 0.5) * snapSize);
+            var snapped = grid.SnapGridCenter(MouseCoords);
 
             //Adjust mouseCoords to new calculated position
-            MouseCoords = new GridCoordinates(mouseLocal + new Vector2(pManager.PlacementOffset.X, pManager.PlacementOffset.Y), MouseCoords.GridID);
+            MouseCoords = snapped.Translated(new Vector2(pManager.PlacementOffset.X, pManager.PlacementOffset.Y));
         }
 
         public override bool IsValidPosition(GridCoordinates position)
