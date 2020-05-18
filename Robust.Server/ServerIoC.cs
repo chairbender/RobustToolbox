@@ -1,6 +1,7 @@
 ﻿using Robust.Server.Console;
 using Robust.Server.Debugging;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.GameStates;
 using Robust.Server.Interfaces;
 using Robust.Server.Interfaces.Console;
@@ -73,6 +74,7 @@ namespace Robust.Server
             IoCManager.Register<IDebugDrawingManager, DebugDrawingManager>();
             IoCManager.Register<IWatchdogApi, WatchdogApi>();
             IoCManager.Register<IScriptHost, ScriptHost>();
+            IoCManager.Register<IInputManager, InputManager>();
         }
     }
 }

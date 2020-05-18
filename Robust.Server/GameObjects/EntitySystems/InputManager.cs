@@ -6,6 +6,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Robust.Server.GameObjects.EntitySystems
@@ -13,10 +14,11 @@ namespace Robust.Server.GameObjects.EntitySystems
     /// <summary>
     ///     Server side processing of incoming user commands.
     /// </summary>
-    public class InputSystem : SharedInputSystem
+    public class InputManager : SharedInputManager, IInputManager, IPostInjectInit, IEntityEventSubscriber
     {
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
 
         private readonly Dictionary<IPlayerSession, IPlayerCommandStates> _playerInputs = new Dictionary<IPlayerSession, IPlayerCommandStates>();
@@ -30,21 +32,15 @@ namespace Robust.Server.GameObjects.EntitySystems
         public override ICommandBindMapping BindMap => _bindMap;
 
         /// <inheritdoc />
-        public override void Initialize()
+        public void PostInject()
         {
-            SubscribeNetworkEvent<FullInputCmdMessage>(InputMessageHandler);
+            _entityManager.EventBus.SubscribeSessionEvent<FullInputCmdMessage>(EventSource.Network, this, InputMessageHandler);
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
         }
 
         private void HandleCommandMessage(IPlayerSession session, InputCmdHandler cmdHandler, FullInputCmdMessage msg)
         {
             cmdHandler.HandleCmdMessage(session, msg);
-        }
-
-        /// <inheritdoc />
-        public override void Shutdown()
-        {
-            _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
         }
 
         private void InputMessageHandler(InputCmdMessage message, EntitySessionEventArgs eventArgs)

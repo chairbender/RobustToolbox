@@ -33,7 +33,7 @@ namespace Robust.Server.GameStates
         [Dependency] private readonly IServerNetManager _networkManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntitySystemManager _systemManager;
+        [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IServerEntityNetworkManager _entityNetworkManager;
         [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
@@ -111,8 +111,6 @@ namespace Robust.Server.GameStates
                 return;
             }
 
-            var inputSystem = _systemManager.GetEntitySystem<InputSystem>();
-
             var oldestAck = GameTick.MaxValue;
 
 
@@ -139,7 +137,7 @@ namespace Robust.Server.GameStates
 
 
                 // lastAck varies with each client based on lag and such, we can't just make 1 global state and send it to everyone
-                var lastInputCommand = inputSystem.GetLastInputCommand(session);
+                var lastInputCommand = _inputManager.GetLastInputCommand(session);
                 var lastSystemMessage = _entityNetworkManager.GetLastMessageSequence(session);
                 var state = new GameState(lastAck, _gameTiming.CurTick,
                     Math.Max(lastInputCommand, lastSystemMessage), entStates?.ToArray(), playerStates?.ToArray(), deletions?.ToArray(), mapData);

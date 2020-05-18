@@ -2,7 +2,7 @@ using Robust.Shared.Input;
 
 namespace Robust.Shared.GameObjects.Systems
 {
-    public abstract class SharedInputSystem : EntitySystem
+    public abstract class SharedInputManager : ISharedInputManager
     {
         public abstract ICommandBindMapping BindMap { get; }
     }
