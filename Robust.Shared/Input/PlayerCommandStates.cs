@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Robust.Shared.Input
+namespace Robust.Shared.Input.Binding
 {
     /// <summary>
     ///     Contains a mapping of <see cref="BoundKeyFunction"/> to their current <see cref="BoundKeyState"/>.

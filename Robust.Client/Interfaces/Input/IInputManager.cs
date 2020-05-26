@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Robust.Client.Input;
 using Robust.Shared.Maths;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 
 namespace Robust.Client.Interfaces.Input
 {

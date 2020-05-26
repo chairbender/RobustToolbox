@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Robust.Shared.Serialization;
 
-namespace Robust.Shared.Input
+namespace Robust.Shared.Input.Binding
 {
     /// <summary>
     ///     A networked identifier for a <see cref="BoundKeyFunction"/>.

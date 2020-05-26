@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Client.GameStates;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
 
 namespace Robust.Client.Interfaces.GameStates

@@ -1,6 +1,6 @@
 ﻿using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 

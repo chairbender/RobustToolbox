@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Map;
 
-namespace Robust.Shared.Input
+namespace Robust.Shared.Input.Binding
 {
     /// <summary>
     ///     Event data values for a bound key state change.

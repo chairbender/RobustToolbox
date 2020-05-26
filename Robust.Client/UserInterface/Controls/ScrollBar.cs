@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Robust.Client.Graphics.Drawing;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Robust.Shared.Input
+namespace Robust.Shared.Input.Binding
 {
     /// <summary>
     ///     Contains a set of created <see cref="InputCmdContext"/>s.

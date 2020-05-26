@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Input;
+﻿using Robust.Shared.Input.Binding;
 
 namespace Robust.Client.Input
 {

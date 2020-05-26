@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.ViewVariables;
 
 namespace Robust.Client.UserInterface.Controls

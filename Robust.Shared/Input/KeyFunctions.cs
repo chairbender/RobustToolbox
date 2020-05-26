@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Robust.Shared.Input
+namespace Robust.Shared.Input.Binding
 {
     public enum BoundKeyState : byte
     {

@@ -178,6 +178,29 @@ namespace Robust.Client.GameObjects
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IsInert { get; private set; }
 
+        /// <summary>
+        /// Update this sprite component to visibly match the other
+        /// </summary>
+        public void CopyFrom(SpriteComponent other)
+        {
+            //TODO: Does this work?
+            this.HandleComponentState(this.GetComponentState(), other.GetComponentState());
+            // this._baseRsi = other._baseRsi;
+            // this._directional = other._directional;
+            // this._visible = other._visible;
+            // this._layerMapShared = other._layerMapShared;
+            // this.color = other.color;
+            // this.offset = other.offset;
+            // this.rotation = other.rotation;
+            // this.scale = other.scale;
+            // this.drawDepth = other.drawDepth;
+            // this.Layers = other.Layers;
+            // this.IsInert = other.IsInert;
+            // this.LayerMap = other.LayerMap;
+            // this.PostShader = other.PostShader;
+            // this.RenderOrder = other.RenderOrder;
+        }
+
         /// <inheritdoc />
         public void LayerMapSet(object key, int layer)
         {

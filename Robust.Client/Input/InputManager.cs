@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;

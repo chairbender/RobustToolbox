@@ -4,7 +4,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
-namespace Robust.Shared.Input
+namespace Robust.Shared.Input.Binding
 {
     /// <summary>
     ///     Abstract class that all Input Commands derive from.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Map;
 using Robust.Shared.Network;

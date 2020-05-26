@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 
 namespace Robust.Client.UserInterface.Controls
 {

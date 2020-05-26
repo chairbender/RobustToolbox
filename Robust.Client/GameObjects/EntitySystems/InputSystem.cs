@@ -6,7 +6,7 @@ using Robust.Client.Interfaces.Input;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -27,7 +27,7 @@ namespace Robust.Client.GameObjects.EntitySystems
 #pragma warning restore 649
 
         private readonly IPlayerCommandStates _cmdStates = new PlayerCommandStates();
-        private readonly CommandBindMapping _bindMap = new CommandBindMapping();
+        private readonly CommandBindRegistry _bindMap = new CommandBindRegistry();
 
         /// <summary>
         ///     Current states for all of the keyFunctions.
@@ -37,7 +37,7 @@ namespace Robust.Client.GameObjects.EntitySystems
         /// <summary>
         ///     Holds the keyFunction -> handler bindings for the simulation.
         /// </summary>
-        public ICommandBindMapping BindMap => _bindMap;
+        public ICommandBindRegistry BindMap => _bindMap;
 
         /// <summary>
         /// If the input system is currently predicting input.
