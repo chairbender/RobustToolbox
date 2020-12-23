@@ -218,7 +218,7 @@ namespace Robust.UnitTesting.Client.UserInterface
 
             _userInterfaceManager.RootControl.ForceRunLayoutUpdate();
 
-            _userInterfaceManager.HandleCanFocusDown((30, 30));
+            _userInterfaceManager.HandleCanFocusDown((30, 30), new [] {EngineKeyFunctions.UIClick});
 
             Assert.That(_userInterfaceManager.KeyboardFocused, Is.EqualTo(control));
             _userInterfaceManager.ReleaseKeyboardFocus();

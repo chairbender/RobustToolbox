@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Robust.Client.Input;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface;
@@ -109,7 +110,7 @@ namespace Robust.Client.Interfaces.UserInterface
         void FrameUpdate(FrameEventArgs args);
 
         /// <returns>True if a UI control was hit and the key event should not pass through past UI.</returns>
-        bool HandleCanFocusDown(Vector2 pointerPosition);
+        bool HandleCanFocusDown(Vector2 pointerPosition, IEnumerable<BoundKeyFunction> functions);
 
         void HandleCanFocusUp();
 

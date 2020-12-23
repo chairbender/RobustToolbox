@@ -58,8 +58,10 @@ namespace Robust.Client.UserInterface
         public Control? KeyboardFocused { get; private set; }
 
         // When a control receives a mouse down it must also receive a mouse up and mouse moves, always.
-        // So we keep track of which control is "focused" by the mouse.
-        private Control? _controlFocused;
+        // So we keep track of which control should be receiving the drag / up events for each event.
+        // This is a dict because multiple different mouse buttons can be pressed down at different times over
+        // different controls.
+        private Dictionary<BoundKeyFunction,Control> _controlsFocused = new();
 
         public LayoutContainer StateRoot { get; private set; } = default!;
         public PopupContainer ModalRoot { get; private set; } = default!;

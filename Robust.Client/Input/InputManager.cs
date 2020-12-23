@@ -234,7 +234,7 @@ namespace Robust.Client.Input
             var uiOnly = false;
             if (hasCanFocus)
             {
-                uiOnly = _userInterfaceManagerInternal.HandleCanFocusDown(MouseScreenPosition);
+                uiOnly = _userInterfaceManagerInternal.HandleCanFocusDown(MouseScreenPosition, bindsDown.Select(bd => bd.Function));
             }
 
             foreach (var binding in bindsDown)
