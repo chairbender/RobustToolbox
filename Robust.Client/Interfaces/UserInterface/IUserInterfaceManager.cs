@@ -109,10 +109,20 @@ namespace Robust.Client.Interfaces.UserInterface
 
         void FrameUpdate(FrameEventArgs args);
 
+
+        /// <summary>
+        /// Handle a keydown of one or more BoundKeyFunctions (such as left click, middle click, or right click)
+        /// on a particular position.
+        /// </summary>
+        /// <param name="pointerPosition">position being keydown'd on</param>
+        /// <param name="functions">functions being performed</param>
         /// <returns>True if a UI control was hit and the key event should not pass through past UI.</returns>
         bool HandleCanFocusDown(Vector2 pointerPosition, IEnumerable<BoundKeyFunction> functions);
 
-        void HandleCanFocusUp();
+        /// <summary>
+        /// Handles a keyup of one or more BoundKeyFunctions
+        /// </summary>
+        void HandleCanFocusUp(IEnumerable<BoundKeyFunction> functions);
 
         void KeyBindDown(BoundKeyEventArgs args);
 

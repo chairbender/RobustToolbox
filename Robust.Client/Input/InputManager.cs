@@ -257,6 +257,7 @@ namespace Robust.Client.Input
             FirstChanceOnKeyEvent?.Invoke(args, KeyEventType.Up);
 
             var hasCanFocus = false;
+            var bindsUp = new List<BoundKeyFunction>();
             foreach (var binding in _bindings)
             {
                 // check if our binding is even in the active context
@@ -267,6 +268,7 @@ namespace Robust.Client.Input
                     PackedMatchesPressedState(binding.PackedKeyCombo))
                 {
                     hasCanFocus |= binding.CanFocus;
+                    bindsUp.Add(binding.Function);
                     UpBind(binding);
                 }
             }
@@ -275,7 +277,7 @@ namespace Robust.Client.Input
 
             if (hasCanFocus)
             {
-                _userInterfaceManagerInternal.HandleCanFocusUp();
+                _userInterfaceManagerInternal.HandleCanFocusUp(bindsUp);
             }
         }
 
