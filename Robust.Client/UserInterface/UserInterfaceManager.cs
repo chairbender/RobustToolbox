@@ -58,14 +58,22 @@ namespace Robust.Client.UserInterface
 
         public Control? KeyboardFocused { get; private set; }
 
-        // When a control receives a KeyBinding which can focus the control, such as a mouse down,
+        // When a control receives a KeyBinding which can focus the control, such as a LMB or RMB down,
         // the control must also receive subsequent mouse up and mouse moves.
         // So, for CanFocus=true KeyBindings, we keep track of which control should be receiving the subsequent drag / key up events.
         // This is a dict because multiple different mouse buttons (or other CanFocus=true KeyBindings) can be pressed down at different times over
         // different controls.
         private Dictionary<BoundKeyFunction,Control> _controlsFocused = new();
+        // This is essentially just a cached version of _controlsFocused.Values.Distinct().
+        // We need to frequently iterate the unique values in _controlsFocused when we handle mouse hovers, so we maintain this list
+        // to avoid allocations when iterating.
+        // This should always be very small, at most like 3 elements, so it shouldn't be a perf issue to insert /
+        // remove, and those operations are performed only on mouse button state changes, so FAR less frequently than iteration
+        // (which is performed on mouse move).
+        private List<Control> _controlsFocusedList = new(3);
         // This tracks the control which has most recently received a CanFocus=true KeyBinding keydown (most recently added to _controlsFocused)
-        // I.e. _controlFocused will always have a corresponding entry in _controlsFocused when non-null
+        // I.e. _lastControlFocused will always be in at least one entry of _controlsFocused when non-null.
+        // It gets cleared when there are no more entries in _controlsFocused with this control as the value.
         private Control? _lastControlFocused;
         public LayoutContainer StateRoot { get; private set; } = default!;
         public PopupContainer ModalRoot { get; private set; } = default!;
@@ -255,6 +263,10 @@ namespace Robust.Client.UserInterface
                             _controlsFocused[boundKeyFunction] = top;
                         }
                         _lastControlFocused = top;
+                        if (!_controlsFocusedList.Contains(top))
+                        {
+                            _controlsFocusedList.Add(top);
+                        }
                         return false; // prevent anything besides the top modal control from receiving input
                     }
                 }
@@ -276,6 +288,10 @@ namespace Robust.Client.UserInterface
                 _controlsFocused[boundKeyFunction] = control;
             }
             _lastControlFocused = control;
+            if (!_controlsFocusedList.Contains(control))
+            {
+                _controlsFocusedList.Add(control);
+            }
 
             if (control.CanKeyboardFocus && control.KeyboardFocusOnClick)
             {
@@ -287,15 +303,30 @@ namespace Robust.Client.UserInterface
 
         public void HandleCanFocusUp(IEnumerable<BoundKeyFunction> functions)
         {
+            var removed = false;
             foreach (var boundKeyFunction in functions)
             {
                 if (!_controlsFocused.TryGetValue(boundKeyFunction, out var control)) continue;
+                removed = true;
                 _controlsFocused.Remove(boundKeyFunction);
                 if (_lastControlFocused == control)
                 {
                     _lastControlFocused = null;
                 }
             }
+
+            // clear the lastControlFocused if it's no longer in any entries of _controlsFocused.
+            // Simultaneously, we refresh _controlsFocusedList now that some entries may have been removed
+            if (!removed) return;
+            _controlsFocusedList.Clear();
+            var stillFocused = false;
+            foreach (var control in _controlsFocused.Values.Distinct())
+            {
+                _controlsFocusedList.Add(control);
+                if (_lastControlFocused == control) stillFocused = true;
+            }
+
+            if (!stillFocused) _lastControlFocused = null;
         }
 
         public void KeyBindDown(BoundKeyEventArgs args)
@@ -380,9 +411,11 @@ namespace Robust.Client.UserInterface
             // all of the controls we previously have keydown'd and have not yet lifted the key for (if any)
             // should receive the mousemove. If we haven't keydown'd anything then we send the hover
             // instead to whatever control we're currently hovering.
-            if (_controlsFocused.Count > 0)
+            if (_controlsFocusedList.Count > 0)
             {
-                foreach (var target in _controlsFocused.Values.Distinct())
+                // As this method can be called frequently, we iterate through our _controlsFocusedList here, which
+                // we've been maintaining to be the same as _controlsFocused.Values.Distinct().
+                foreach (var target in _controlsFocusedList)
                 {
                     DoGUIMouseMoveEvent(target, mouseMoveEventArgs);
                 }
